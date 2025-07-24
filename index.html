@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KidGameZone - Fun Games for Kids!</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Kid<span>GameZ</span>one</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" class="active" data-tab="home">Home</a></li>
+                    <li><a href="#" data-tab="categories">Categories</a></li>
+                    <li><a href="#" data-tab="popular">Popular</a></li>
+                    <li><a href="#" data-tab="new">New Games</a></li>
+                </ul>
+            </nav>
+            <div class="search-box">
+                <input type="text" placeholder="Find fun games...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Home Tab Content -->
+    <div id="home-tab" class="tab-content active">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="floating-items">
+                <div class="floating-item"></div>
+                <div class="floating-item"></div>
+                <div class="floating-item"></div>
+            </div>
+            <div class="container">
+                <div class="hero-content">
+                    <h2>Super Fun Games for Kids!</h2>
+                    <p>Play awesome games with colorful characters and exciting adventures!</p>
+                    <a href="#" class="hero-btn" data-tab="popular">Play Now!</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tab Navigation -->
+        <section class="tab-navigation">
+            <div class="container">
+                <div class="tab-buttons">
+                    <button class="tab-button active" data-tab="categories">Game Categories</button>
+                    <button class="tab-button" data-tab="popular">Popular Games</button>
+                    <button class="tab-button" data-tab="new">New Games</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Categories Preview -->
+        <section class="section categories">
+            <div class="container">
+                <h2 class="section-title">Game Categories</h2>
+                <div class="category-grid">
+                    <div class="category-card" data-category="action">
+                        <div class="category-icon"><i class="fas fa-rocket"></i></div>
+                        <h3>Action</h3>
+                    </div>
+                    <div class="category-card" data-category="adventure">
+                        <div class="category-icon"><i class="fas fa-compass"></i></div>
+                        <h3>Adventure</h3>
+                    </div>
+                    <div class="category-card" data-category="puzzle">
+                        <div class="category-icon"><i class="fas fa-puzzle-piece"></i></div>
+                        <h3>Puzzle</h3>
+                    </div>
+                    <div class="category-card" data-category="racing">
+                        <div class="category-icon"><i class="fas fa-car-side"></i></div>
+                        <h3>Racing</h3>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 40px;">
+                    <a href="#" class="hero-btn" data-tab="categories">See All Categories</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Categories Tab Content -->
+    <div id="categories-tab" class="tab-content">
+        <section class="section categories">
+            <div class="container">
+                <h2 class="section-title">All Game Categories</h2>
+                <div class="category-grid">
+                    <div class="category-card" data-category="action">
+                        <div class="category-icon"><i class="fas fa-rocket"></i></div>
+                        <h3>Action</h3>
+                    </div>
+                    <div class="category-card" data-category="adventure">
+                        <div class="category-icon"><i class="fas fa-compass"></i></div>
+                        <h3>Adventure</h3>
+                    </div>
+                    <div class="category-card" data-category="puzzle">
+                        <div class="category-icon"><i class="fas fa-puzzle-piece"></i></div>
+                        <h3>Puzzle</h3>
+                    </div>
+                    <div class="category-card" data-category="racing">
+                        <div class="category-icon"><i class="fas fa-car-side"></i></div>
+                        <h3>Racing</h3>
+                    </div>
+                    <div class="category-card" data-category="sports">
+                        <div class="category-icon"><i class="fas fa-futbol"></i></div>
+                        <h3>Sports</h3>
+                    </div>
+                    <div class="category-card" data-category="strategy">
+                        <div class="category-icon"><i class="fas fa-chess-knight"></i></div>
+                        <h3>Strategy</h3>
+                    </div>
+                    <div class="category-card" data-category="arcade">
+                        <div class="category-icon"><i class="fas fa-gamepad"></i></div>
+                        <h3>Arcade</h3>
+                    </div>
+                    <div class="category-card" data-category="multiplayer">
+                        <div class="category-icon"><i class="fas fa-users"></i></div>
+                        <h3>Multiplayer</h3>
+                    </div>
+                    <div class="category-card" data-category="educational">
+                        <div class="category-icon"><i class="fas fa-graduation-cap"></i></div>
+                        <h3>Educational</h3>
+                    </div>
+                    <div class="category-card" data-category="drawing">
+                        <div class="category-icon"><i class="fas fa-paint-brush"></i></div>
+                        <h3>Drawing</h3>
+                    </div>
+                    <div class="category-card" data-category="music">
+                        <div class="category-icon"><i class="fas fa-music"></i></div>
+                        <h3>Music</h3>
+                    </div>
+                    <div class="category-card" data-category="cooking">
+                        <div class="category-icon"><i class="fas fa-utensils"></i></div>
+                        <h3>Cooking</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Popular Games Tab Content -->
+    <div id="popular-tab" class="tab-content">
+        <section class="section games-section">
+            <div class="container">
+                <h2 class="section-title">Popular Games</h2>
+                <div class="games-grid">
+                    <div class="game-card" data-game-title="Epic Shooter" data-game-url="https://zv1y2i8p.play.gamezop.com/g/Nr1P9rmbi">
+                        <div class="game-thumbnail">
+                            <img src="https://images.unsplash.com/photo-1552820728-8b83bb6b773f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Epic Shooter">
+                            <div class="game-actions">
+                                <div class="play-button">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                                <div class="fullscreen-button">
+                                    <i class="fas fa-expand"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="game-info">
+                            <h3>Epic Shooter</h3>
+                            <div class="game-meta">
+                                <div class="rating">
+                                    <i class="fas fa-star"></i>
+                                    <span>4.8</span>
+                                </div>
+                                <span><i class="fas fa-tag"></i> Action</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="game-card" data-game-title="Mind Puzzle" data-game-url="https://zv1y2i8p.play.gamezop.com/g/QPcVkaHi1">
+                        <div class="game-thumbnail">
+                            <img src="https://images.unsplash.com/photo-1606092195730-5d7b9af1efc5?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Mind Puzzle">
+                            <div class="game-actions">
+                                <div class="play-button">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                                <div class="fullscreen-button">
+                                    <i class="fas fa-expand"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="game-info">
+                            <h3>Mind Puzzle</h3>
+                            <div class="game-meta">
+                                <div class="rating">
+                                    <i class="fas fa-star"></i>
+                                    <span>4.5</span>
+                                </div>
+                                <span><i class="fas fa-tag"></i> Puzzle</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="game-card" data-game-title="Speed Racer" data-game-url="https://zv1y2i8p.play.gamezop.com/g/Nr1P9rmbi">
+                        <div class="game-thumbnail">
+                            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Speed Racer">
+                            <div class="game-actions">
+                                <div class="play-button">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                                <div class="fullscreen-button">
+                                    <i class="fas fa-expand"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="game-info">
+                            <h3>Speed Racer</h3>
+                            <div class="game-meta">
+                                <div class="rating">
+                                    <i class="fas fa-star"></i>
+                                    <span>4.7</span>
+                                </div>
+                                <span><i class="fas fa-tag"></i> Racing</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="game-card" data-game-title="Adventure Quest" data-game-url="https://zv1y2i8p.play.gamezop.com/g/QPcVkaHi1">
+                        <div class="game-thumbnail">
+                            <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Adventure Quest">
+                            <div class="game-actions">
+                                <div class="play-button">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                                <div class="fullscreen-button">
+                                    <i class="fas fa-expand"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="game-info">
+                            <h3>Adventure Quest</h3>
+                            <div class="game-meta">
+                                <div class="rating">
+                                    <i class="fas fa-star"></i>
+                                    <span>4.6</span>
+                                </div>
+                                <span><i class="fas fa-tag"></i> Adventure</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="game-card" data-game-title="Football Pro" data-game-url="https://zv1y2i8p.play.gamezop.com/g/Nr1P9rmbi">
+                        <div class="game-thumbnail">
+                            <img src="https://images.unsplash.com/photo-1579952363873-27d3bfad9c0d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Football Pro">
+                            <div class="game-actions">
+                                <div class="play-button">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                                <div class="fullscreen-button">
+                                    <i class="fas fa-expand"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="game-info">
+                            <h3>Football Pro</h3>
+                            <div class="game-meta">
+                                <div class="rating">
+                                    <i class="fas fa-star"></i>
+                                    <span>4.9</span>
+                                </div>
+                                <span><i class="fas fa-tag"></i> Sports</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="game-card" data-game-title="Space Battle" data-game-url="https://zv1y2i8p.play.gamezop.com/g/QPcVkaHi1">
+                        <div class="game-thumbnail">
+                            <img src="https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Space Battle">
+                            <div class="game-actions">
+                                <div class="play-button">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                                <div class="fullscreen-button">
+                                    <i class="fas fa-expand"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="game-info">
+                            <h3>Space Battle</h3>
+                            <div class="game-meta">
+                                <div class="rating">
+                                    <i class="fas fa-star"></i>
+                                    <span>4.7</span>
+                                </div>
+                                <span><i class="fas fa-tag"></i> Action</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- New Games Tab Content -->
+    <div id="new-tab" class="tab-content">
+        <section class="section games-section">
+            <div class="container">
+                <h2 class="section-title">New Games</h2>
+                <div class="games-grid">
+                    <div class="game-card" data-game-title="Ninja Warrior" data-game-url="https://zv1y2i8p.play.gamezop.com/g/Nr1P9rmbi">
+                        <div class="game-thumbnail">
+                            <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Ninja Warrior">
+                            <div class="game-actions">
+                                <div class="play-button">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                                <div class="fullscreen-button">
+                                    <i class="fas fa-expand"></i>
+                                </div>
+                            </div>
+                            <div class="new-tag">NEW</div>
+                        </div>
+                        <div class="game-info">
+                            <h3>Ninja Warrior</h3>
+                            <div class="game-meta">
+                                <div class="rating">
+                                    <i class="fas fa-star"></i>
+                                    <span>4.9</span>
+                                </div>
+                                <span><i class="fas fa-tag"></i> Action</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="game-card" data-game-title="Crystal Maze" data-game-url="https://zv1y2i8p.play.gamezop.com/g/QPcVkaHi1">
+                        <div class="game-thumbnail">
+                            <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Crystal Maze">
+                            <div class="game-actions">
+                                <div class="play-button">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                                <div class="fullscreen-button">
+                                    <i class="fas fa-expand"></i>
+                                </div>
+                            </div>
+                            <div class="new-tag">NEW</div>
+                        </div>
+                        <div class="game-info">
+                            <h3>Crystal Maze</h3>
+                            <div class="game-meta">
+                                <div class="rating">
+                                    <i class="fas fa-star"></i>
+                                    <span>4.7</span>
+                                </div>
+                                <span><i class="fas fa-tag"></i> Adventure</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="game-card" data-game-title="Cyber Runner" data-game-url="https://zv1y2i8p.play.gamezop.com/g/Nr1P9rmbi">
+                        <div class="game-thumbnail">
+                            <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Cyber Runner">
+                            <div class="game-actions">
+                                <div class="play-button">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                                <div class="fullscreen-button">
+                                    <i class="fas fa-expand"></i>
+                                </div>
+                            </div>
+                            <div class="new-tag">NEW</div>
+                        </div>
+                        <div class="game-info">
+                            <h3>Cyber Runner</h3>
+                            <div class="game-meta">
+                                <div class="rating">
+                                    <i class="fas fa-star"></i>
+                                    <span>4.8</span>
+                                </div>
+                                <span><i class="fas fa-tag"></i> Racing</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="game-card" data-game-title="Magic Quest" data-game-url="https://zv1y2i8p.play.gamezop.com/g/QPcVkaHi1">
+                        <div class="game-thumbnail">
+                            <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Magic Quest">
+                            <div class="game-actions">
+                                <div class="play-button">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                                <div class="fullscreen-button">
+                                    <i class="fas fa-expand"></i>
+                                </div>
+                            </div>
+                            <div class="new-tag">NEW</div>
+                        </div>
+                        <div class="game-info">
+                            <h3>Magic Quest</h3>
+                            <div class="game-meta">
+                                <div class="rating">
+                                    <i class="fas fa-star"></i>
+                                    <span>4.6</span>
+                                </div>
+                                <span><i class="fas fa-tag"></i> Strategy</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="game-card" data-game-title="Bubble Pop" data-game-url="https://zv1y2i8p.play.gamezop.com/g/Nr1P9rmbi">
+                        <div class="game-thumbnail">
+                            <img src="https://images.unsplash.com/photo-1560253023-3ec5d502959f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Bubble Pop">
+                            <div class="game-actions">
+                                <div class="play-button">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                                <div class="fullscreen-button">
+                                    <i class="fas fa-expand"></i>
+                                </div>
+                            </div>
+                            <div class="new-tag">NEW</div>
+                        </div>
+                        <div class="game-info">
+                            <h3>Bubble Pop</h3>
+                            <div class="game-meta">
+                                <div class="rating">
+                                    <i class="fas fa-star"></i>
+                                    <span>4.5</span>
+                                </div>
+                                <span><i class="fas fa-tag"></i> Puzzle</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="game-card" data-game-title="Dino Jump" data-game-url="https://zv1y2i8p.play.gamezop.com/g/QPcVkaHi1">
+                        <div class="game-thumbnail">
+                            <img src="https://images.unsplash.com/photo-1559163387-e51e4871e8d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Dino Jump">
+                            <div class="game-actions">
+                                <div class="play-button">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                                <div class="fullscreen-button">
+                                    <i class="fas fa-expand"></i>
+                                </div>
+                            </div>
+                            <div class="new-tag">NEW</div>
+                        </div>
+                        <div class="game-info">
+                            <h3>Dino Jump</h3>
+                            <div class="game-meta">
+                                <div class="rating">
+                                    <i class="fas fa-star"></i>
+                                    <span>4.4</span>
+                                </div>
+                                <span><i class="fas fa-tag"></i> Arcade</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>KidGameZone</h3>
+                    <p>The ultimate destination for kids to play awesome online games! Discover fun games across all categories - Action, Adventure, Puzzle & More!</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#" data-tab="home">Home</a></li>
+                        <li><a href="#" data-tab="categories">Categories</a></li>
+                        <li><a href="#" data-tab="popular">Popular Games</a></li>
+                        <li><a href="#" data-tab="new">New Games</a></li>
+                        <li><a href="#">Top Rated</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Categories</h3>
+                    <ul>
+                        <li><a href="#">Action Games</a></li>
+                        <li><a href="#">Adventure Games</a></li>
+                        <li><a href="#">Puzzle Games</a></li>
+                        <li><a href="#">Racing Games</a></li>
+                        <li><a href="#">Educational Games</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Parents</h3>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Parental Controls</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 KidGameZone. All Rights Reserved. Made with <span>❤️</span> for kids everywhere!</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button id="scroll-top" class="scroll-top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Game Modal -->
+    <div id="game-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Game Title</div>
+                <div class="modal-controls">
+                    <button class="modal-btn" id="toggle-fullscreen" title="Toggle Fullscreen">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                    <button class="modal-btn close-modal" title="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="modal-game-container">
+                <div id="modal-game-frame"></div>
+            </div>
+        </div>
+    </div>
+ <script src="script.js"></script>
+</body>
+</html>
