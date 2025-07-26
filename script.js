@@ -1,304 +1,265 @@
-        document.addEventListener('DOMContentLoaded', function() {
-            // Variables
-            const modal = document.getElementById('game-modal');
-            const modalContent = document.querySelector('.modal-content');
-            const modalGameFrame = document.getElementById('modal-game-frame');
-            const modalTitle = document.querySelector('.modal-title');
-            const closeModal = document.querySelector('.close-modal');
-            const toggleFullscreen = document.getElementById('toggle-fullscreen');
-            const scrollTopBtn = document.getElementById('scroll-top');
-            
-            let isFullscreen = false;
-            let currentGameUrl = '';
-            let currentGameTitle = '';
+//---- DATA ----//
+const categories = [
+    { name: 'Action', icon: '⚔️' },
+    { name: 'Puzzle', icon: '🧩' },
+    { name: 'Racing', icon: '🏎️' },
+    { name: 'Adventure', icon: '🌲' },
+    { name: 'Kids', icon: '🧸' },
+    { name: 'Sports', icon: '🏀' },
+    { name: 'Card', icon: '🃏' },
+    { name: 'Board', icon: '♟️'},
+    { name: 'Match 3', icon: '💎'},
+    { name: 'Dice', icon: '🎲'},
+    { name: 'Fighting', icon: '🥊' },
+    { name: 'Memory', icon: '🧠'},
+    { name: 'Hidden Object', icon: '🕵️‍♂️'},
+    { name: 'Word', icon: '🔤'},
+    { name: '1 Player', icon: '👤'},
+    { name: '2 Player', icon: '🧑‍🤝‍🧑'},
+    { name: '3-4 Player', icon: '👨‍👩‍👧‍👦'},
+    { name: 'Arcade', icon: '👾' }
+];
 
-            // Tab functionality
-            function showTab(tabId) {
-                // Hide all tab contents
-                document.querySelectorAll('.tab-content').forEach(tab => {
-                    tab.classList.remove('active');
-                });
-                
-                // Show the selected tab
-                document.getElementById(tabId + '-tab').classList.add('active');
-                
-                // Update active state in navigation
-                document.querySelectorAll('nav ul li a').forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('data-tab') === tabId) {
-                        link.classList.add('active');
-                    }
-                });
-                
-                // Update active state in tab buttons
-                document.querySelectorAll('.tab-button').forEach(button => {
-                    button.classList.remove('active');
-                    if (button.getAttribute('data-tab') === tabId) {
-                        button.classList.add('active');
-                    }
-                });
-                
-                // Scroll to top when changing tabs
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
-            }
-            
-            // Add event listeners to all tab links
-            document.querySelectorAll('[data-tab]').forEach(element => {
-                element.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const tabId = this.getAttribute('data-tab');
-                    showTab(tabId);
-                });
-            });
 
-            // Scroll to top functionality
-            window.addEventListener('scroll', function() {
-                if (window.pageYOffset > 500) {
-                    scrollTopBtn.classList.add('active');
-                } else {
-                    scrollTopBtn.classList.remove('active');
-                }
-            });
+// Sample games (delete/extend as desired)
+const gamesList = [];
 
-            scrollTopBtn.addEventListener('click', function() {
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
-            });
+//---- SIDEBAR ----//
+const hamburgerBtn = document.getElementById('hamburgerBtn');
+const sidebar = document.getElementById('sidebar');
+const sidebarOverlay = document.getElementById('sidebarOverlay');
+const sidebarLinks = document.getElementById('sidebarLinks');
 
-            // Game modal functionality
-            function openModal(gameTitle, gameUrl, fullscreen = false) {
-                currentGameTitle = gameTitle;
-                currentGameUrl = gameUrl;
-                modalTitle.textContent = gameTitle;
-                 modalGameFrame.innerHTML = `<iframe src="${gameUrl}" frameborder="0" allowfullscreen style="width: 100%; height: 100%;"></iframe>`;
-                
-                if (fullscreen) {
-                    modalContent.classList.add('fullscreen');
-                    toggleFullscreen.innerHTML = '<i class="fas fa-compress"></i>';
-                    isFullscreen = true;
-                } else {
-                    modalContent.classList.remove('fullscreen');
-                    toggleFullscreen.innerHTML = '<i class="fas fa-expand"></i>';
-                    isFullscreen = false;
-                }
-                
-                modal.style.display = 'block';
-                document.body.style.overflow = 'hidden';
-            }
+// Build Sidebar categories & All Games
+function buildSidebarLinks() {
+    let html = `<a class="sidebar-link active" data-section="allGamesSection" id="sidebarAllGames"><b>🎮 All Games</b></a>`;
+    categories.forEach(cat => {
+        html += `<a class="sidebar-link" data-section="cat_${cat.name}">${cat.icon} ${cat.name}</a>`;
+    });
+    sidebarLinks.innerHTML = html;
+}
+buildSidebarLinks();
 
-            function closeModalFunction() {
-                modal.style.display = 'none';
-                modalGameFrame.innerHTML = '';
-                document.body.style.overflow = 'auto';
-                modalContent.classList.remove('fullscreen');
-                isFullscreen = false;
-            }
+// Sidebar open/close logic with animation
+function openSidebar() {
+    sidebar.classList.add('open');
+    hamburgerBtn.classList.add('open');
+    sidebarOverlay.style.display = 'block';
+    setTimeout(() => sidebarOverlay.style.opacity = 1, 5);
+}
+function closeSidebar() {
+    sidebar.classList.remove('open');
+    hamburgerBtn.classList.remove('open');
+    sidebarOverlay.style.opacity = 0;
+    setTimeout(() => sidebarOverlay.style.display = 'none', 350);
+}
+hamburgerBtn.addEventListener('click', () => {
+    sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
+});
+sidebarOverlay.addEventListener('click', closeSidebar);
 
-            // Event listeners for game cards
-            document.querySelectorAll('.game-card').forEach(card => {
-                const playButton = card.querySelector('.play-button');
-                const fullscreenButton = card.querySelector('.fullscreen-button');
-                const gameTitle = card.getAttribute('data-game-title');
-                const gameUrl = card.getAttribute('data-game-url');
+//---- PAGE TRANSITION ----//
+// Only 1 page-section is .active at once
+function switchSection(sectionId) {
+    document.querySelectorAll('.sidebar-link').forEach(el => el.classList.remove('active'));
+    if (sectionId === "allGamesSection") {
+        document.getElementById('sidebarAllGames').classList.add('active');
+    } else {
+        let link = [...sidebarLinks.children].find(
+            a => a.getAttribute('data-section') === sectionId
+        ); link && link.classList.add('active');
+    }
 
-                if (playButton) {
-                    playButton.addEventListener('click', function() {
-                        openModal(gameTitle, gameUrl, false);
-                    });
-                }
+    const sections = document.querySelectorAll('.page-section');
+    sections.forEach(sec => {
+        if (sec.id === sectionId) {
+            sec.classList.add('active');
+        } else {
+            sec.classList.remove('active');
+        }
+    });
+    closeSidebar();
+}
 
-                if (fullscreenButton) {
-                    fullscreenButton.addEventListener('click', function() {
-                        openModal(gameTitle, gameUrl, true);
-                    });
-                }
-            });
+// Sidebar link click → change section, animate
+sidebarLinks.addEventListener('click', e => {
+    if (e.target && e.target.classList.contains('sidebar-link')) {
+        const sectionId = e.target.getAttribute('data-section');
+        showSection(sectionId);
+    }
+});
 
-            // Modal controls
-            closeModal.addEventListener('click', closeModalFunction);
+// Show/hide sections with dynamic generation if needed
+function showSection(sectionId) {
+    if (sectionId === 'allGamesSection') {
+        switchSection('allGamesSection');
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        return;
+    }
+    // If category page section doesn't exist, create it!
+    let sec = document.getElementById(sectionId);
+    if (!sec) {
+        sec = document.createElement('section');
+        sec.className = 'page-section';
+        sec.id = sectionId;
+        sec.innerHTML =
+            `<div class="category-grid" id="catGrid_${sectionId.replace("cat_", "")}"></div>`;
+        document.querySelector('main').appendChild(sec);
+        // Populate with cards from that category
+        renderCategoryGames(sectionId.replace("cat_", ""));
+    }
+    // Animate transition
+    switchSection(sectionId);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
 
-            toggleFullscreen.addEventListener('click', function() {
-                if (isFullscreen) {
-                    modalContent.classList.remove('fullscreen');
-                    this.innerHTML = '<i class="fas fa-expand"></i>';
-                    this.title = 'Fullscreen';
-                    isFullscreen = false;
-                } else {
-                    modalContent.classList.add('fullscreen');
-                    this.innerHTML = '<i class="fas fa-compress"></i>';
-                    this.title = 'Exit Fullscreen';
-                    isFullscreen = true;
-                }
-            });
+//---- GAME GRID RENDERING ----//
+const gridAll = document.getElementById('gamesGrid');
 
-            // Close modal when clicking outside
-            window.addEventListener('click', function(event) {
-                if (event.target === modal) {
-                    closeModalFunction();
-                }
-            });
+function renderGameCard({ url, thumb, name, category }) {
+    return `
+        <div class="game-card" data-category="${category}">
+          <div class="game-thumb"><img src="${thumb}" alt="${name}"></div>
+          <div class="game-info">
+            <div class="game-title">${name}</div>
+           <button class="game-play-btn" data-gameurl="${url}">Play</button>
 
-            // Escape key to close modal
-            document.addEventListener('keydown', function(event) {
-                if (event.key === 'Escape' && modal.style.display === 'block') {
-                    closeModalFunction();
-                }
-            });
+          </div>
+        </div>
+      `;
+}
 
-            // Category filtering
-            document.querySelectorAll('.category-card').forEach(card => {
-                card.addEventListener('click', function() {
-                    const category = this.getAttribute('data-category');
-                    
-                    // Show the popular games tab
-                    showTab('popular');
-                    
-                    // Add animation to show filtering
-                    const gameCards = document.querySelectorAll('.game-card');
-                    gameCards.forEach((card, index) => {
-                        card.style.opacity = '0';
-                        card.style.transform = 'translateY(20px)';
-                        setTimeout(() => {
-                            card.style.opacity = '1';
-                            card.style.transform = 'translateY(0)';
-                        }, index * 100);
-                    });
-                    
-                    // Show a message about filtering
-                    const gamesSection = document.querySelector('#popular-tab .section-title');
-                    gamesSection.textContent = category.charAt(0).toUpperCase() + category.slice(1) + ' Games';
-                });
-            });
+// Initial load: show all games
+function renderAllGames() {
+    gridAll.innerHTML = gamesList.map(g => renderGameCard(g)).join('');
+}
+renderAllGames();
 
-            // Search functionality
-            const searchInput = document.querySelector('.search-box input');
-            const searchButton = document.querySelector('.search-box button');
+// Render category-specific
+function renderCategoryGames(category) {
+    let filtered = gamesList.filter(g => g.category === category);
+    let catGrid = document.getElementById('catGrid_' + category);
+    if (!catGrid) return;
+    catGrid.innerHTML = filtered.length
+        ? filtered.map(g => renderGameCard(g)).join('')
+        : `<div style="padding:56px 0 0 12px; font-size:1.18rem;">No games yet in this category.</div>`;
+}
 
-            function performSearch() {
-                const query = searchInput.value.toLowerCase().trim();
-                if (query) {
-                    // Show popular games tab for search results
-                    showTab('popular');
-                    
-                    const gameCards = document.querySelectorAll('.game-card');
-                    let foundGames = false;
-                    
-                    gameCards.forEach(card => {
-                        const gameTitle = card.getAttribute('data-game-title').toLowerCase();
-                        if (gameTitle.includes(query)) {
-                            card.style.display = 'block';
-                            foundGames = true;
-                        } else {
-                            card.style.display = 'none';
-                        }
-                    });
-                    
-                    // Update section title to show search results
-                    const gamesSection = document.querySelector('#popular-tab .section-title');
-                    gamesSection.textContent = `Search Results for "${query}"`;
-                    
-                    if (!foundGames) {
-                        alert('No games found matching your search. Try different keywords!');
-                        gameCards.forEach(card => card.style.display = 'block');
-                        gamesSection.textContent = 'Popular Games';
-                    }
-                } else {
-                    document.querySelectorAll('.game-card').forEach(card => {
-                        card.style.display = 'block';
-                    });
-                    
-                    // Reset section title
-                    const gamesSection = document.querySelector('#popular-tab .section-title');
-                    gamesSection.textContent = 'Popular Games';
-                }
-            }
+//---- Add New Game API ----//
+// You can call this externally as window.addNewGame(...)
+function addNewGame(gameURL, thumbnailURL, gameName, categoryName) {
+    const newGame = {
+        url: gameURL,
+        thumb: thumbnailURL,
+        name: gameName,
+        category: categoryName
+    };
+    gamesList.push(newGame);
 
-            searchButton.addEventListener('click', performSearch);
-            searchInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    performSearch();
-                }
-            });
+    // Add to all games grid
+    gridAll.insertAdjacentHTML('beforeend', renderGameCard(newGame));
 
-            // Add scroll animations
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            };
+    // If a category tab/section is open and matches, add there too
+    const catGrid = document.getElementById('catGrid_' + categoryName);
+    if (catGrid) {
+        catGrid.insertAdjacentHTML('beforeend', renderGameCard(newGame));
+    }
+}
+window.addNewGame = addNewGame; // global for dev/testing
 
-            const observer = new IntersectionObserver(function(entries) {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
-                    }
-                });
-            }, observerOptions);
+//---- SCROLL TO TOP ----//
+const scrollBtn = document.getElementById('scrollToTopBtn');
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 240) {
+        scrollBtn.classList.add('show');
+    } else {
+        scrollBtn.classList.remove('show');
+    }
+});
+scrollBtn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    scrollBtn.blur();
+});
 
-            // Observe elements for animation
-            document.querySelectorAll('.game-card, .category-card').forEach(el => {
-                el.style.opacity = '0';
-                el.style.transform = 'translateY(30px)';
-                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                observer.observe(el);
-            });
+//---- Responsive: hide sidebar if window resized wide ----//
+window.addEventListener('resize', () => {
+    if (window.innerWidth > 900 && sidebar.classList.contains('open'))
+        closeSidebar();
+});
 
-            // Add loading animation
-            window.addEventListener('load', function() {
-                document.body.classList.add('loaded');
-            });
+//---- Make All Games default on page load
+switchSection('allGamesSection');
 
-            // Add confetti effect when clicking play button
-            document.querySelectorAll('.play-button').forEach(button => {
-                button.addEventListener('mousedown', function(e) {
-                    // Create confetti elements
-                    for (let i = 0; i < 30; i++) {
-                        createConfetti(e.clientX, e.clientY);
-                    }
-                });
-            });
+//---- For Demo: Show animation on initial render
+setTimeout(() => { document.body.style.opacity = 1; }, 100);
 
-            function createConfetti(x, y) {
-                const colors = ['#ff6b6b', '#4a3aff', '#ffd53e', '#4cd137', '#ff9a9e'];
-                const confetti = document.createElement('div');
-                confetti.style.position = 'fixed';
-                confetti.style.width = Math.random() * 10 + 5 + 'px';
-                confetti.style.height = Math.random() * 10 + 5 + 'px';
-                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                confetti.style.borderRadius = '50%';
-                confetti.style.zIndex = '9999';
-                confetti.style.pointerEvents = 'none';
-                confetti.style.left = x + 'px';
-                confetti.style.top = y + 'px';
-                document.body.appendChild(confetti);
-                
-                // Animate confetti
-                const angle = Math.random() * Math.PI * 2;
-                const velocity = Math.random() * 5 + 5;
-                const vx = Math.cos(angle) * velocity;
-                const vy = Math.sin(angle) * velocity;
-                let posX = x;
-                let posY = y;
-                
-                const animate = () => {
-                    posX += vx;
-                    posY += vy - 0.5; // Add gravity
-                    confetti.style.left = posX + 'px';
-                    confetti.style.top = posY + 'px';
-                    confetti.style.opacity = parseFloat(confetti.style.opacity || 1) - 0.02;
-                    
-                    if (parseFloat(confetti.style.opacity) > 0) {
-                        requestAnimationFrame(animate);
-                    } else {
-                        confetti.remove();
-                    }
-                };
-                
-                requestAnimationFrame(animate);
-            }
-        });
+// Game Modal logic
+const gameModal = document.getElementById('gameModal');
+const gameIframe = document.getElementById('gameIframe');
+const closeModalBtn = document.getElementById('closeModalBtn');
+const modalOverlay = document.getElementById('gameModalOverlay');
+const fullscreenBtn = document.getElementById('fullscreenBtn');
+fullscreenBtn.addEventListener('click', function () {
+    const gameIframe = document.getElementById('gameIframe');
+    if (gameIframe.requestFullscreen) {
+        gameIframe.requestFullscreen();
+    } else if (gameIframe.webkitRequestFullscreen) { // Safari
+        gameIframe.webkitRequestFullscreen();
+    } else if (gameIframe.msRequestFullscreen) { // IE11
+        gameIframe.msRequestFullscreen();
+    }
+});
+
+
+document.body.addEventListener('click', function (e) {
+    // Play button click
+    if (e.target && e.target.classList.contains('game-play-btn')) {
+        const gameURL = e.target.getAttribute('data-gameurl');
+        if (gameURL && gameURL !== '#') {
+            gameIframe.src = gameURL;
+            gameModal.style.display = 'flex';
+            setTimeout(() => { gameModal.style.opacity = 1; }, 10);
+        } else {
+            alert('Embed URL is missing!');
+        }
+    }
+    // Close modal logic
+    if (e.target === closeModalBtn || e.target === modalOverlay) {
+        gameModal.style.opacity = 0;
+        setTimeout(() => {
+            gameModal.style.display = 'none';
+            gameIframe.src = '';
+        }, 300);
+    }
+});
+addNewGame('https://cdn.htmlgames.com/DutchShuffleboard/', 'https://www.htmlgames.com/uploaded/game/thumb200/dutchshuffleboard200.webp', 'Dutch Shuffleboard', 'Sports');
+addNewGame('https://cdn.htmlgames.com/MayaGolf2/', 'https://www.htmlgames.com/uploaded/game/thumb200/mayagolf2200.webp', 'Maya Golf 2', 'Sports');
+addNewGame('https://cdn.htmlgames.com/BubbleShooter/', 'https://www.htmlgames.com/uploaded/game/thumb200/bubbleshooter200.webp', 'Bubble Shooter', 'Puzzle');
+addNewGame('https://cdn.htmlgames.com/Chess/', 'https://www.htmlgames.com/uploaded/game/thumb/chess-300x200.webp', 'Chess', 'Board');
+addNewGame('https://cdn.htmlgames.com/Checkers/', 'https://www.htmlgames.com/uploaded/game/thumb/checkers300.webp', 'Checkers', 'Board');
+addNewGame('https://cdn.htmlgames.com/BounceBall2/', 'https://www.htmlgames.com/uploaded/game/thumb200/bounceball2200.webp', 'Bounce Ball 2', 'Arcade');
+addNewGame('https://cdn.htmlgames.com/CubeBuster/', 'https://www.htmlgames.com/uploaded/game/thumb200/cubebuster200.webp', 'Cube Buster', 'Puzzle');
+addNewGame('https://cdn.htmlgames.com/SolitaireReverse/', 'https://www.htmlgames.com/uploaded/game/thumb200/solitairereverse200.webp', 'Solitaire Reverse', 'Card');
+addNewGame('https://cdn.htmlgames.com/WildWestKlondike/', 'https://www.htmlgames.com/uploaded/game/thumb200/wildwestklondike200.webp', 'Wild West Klondike', 'Card');
+addNewGame('https://cdn.htmlgames.com/MontanaSolitaire/', 'https://www.htmlgames.com/uploaded/game/thumb200/montanasolitaire200.webp', 'Montana Solitaire', 'Card');
+addNewGame('https://cdn.htmlgames.com/FlowerWorld2/', 'https://www.htmlgames.com/uploaded/game/thumb200/flowerworld2200.webp', 'Flower World 2', 'Match 3');
+addNewGame('https://cdn.htmlgames.com/AladdinSolitaire/', 'https://www.htmlgames.com/uploaded/game/thumb200/aladdinsolitaire200.webp', 'Aladdin Solitaire', 'Card');
+addNewGame('https://cdn.htmlgames.com/LoveBubbles/', 'https://www.htmlgames.com/uploaded/game/thumb200/lovebubbles200.webp', 'Love Bubbles', 'Bubble Shooter');
+addNewGame('https://cdn.htmlgames.com/PantagruelDoubleKlondike/', 'https://www.htmlgames.com/uploaded/game/thumb200/pantagrueldoubleklondike200.webp', 'Pantagruel Double Klondike', 'Card');
+addNewGame('https://cdn.htmlgames.com/MysteriousPirateJewels3/', 'https://www.htmlgames.com/uploaded/game/thumb200/mysteriouspiratejewels3200.webp', 'Mysterious Pirate Jewels 3', 'Match 3');
+addNewGame('https://cdn.htmlgames.com/TripleDimensionsIceAge/', 'https://www.htmlgames.com/uploaded/game/thumb200/triple-dimensions-ice-age-200.webp', 'Triple Dimensions Ice Age', 'Card');
+addNewGame('https://cdn.htmlgames.com/NinjaBreakout/', 'https://www.htmlgames.com/uploaded/game/thumb200/ninjabreakout200.webp', 'Ninja Breakout', 'Arcade');
+addNewGame('https://cdn.htmlgames.com/ChristmasTreeSolitaire/', 'https://www.htmlgames.com/uploaded/game/thumb200/christmastreesolitaire200.webp', 'Christmas Tree Solitaire', 'Card');
+addNewGame('https://cdn.htmlgames.com/HiddenSpotsCity/', 'https://www.htmlgames.com/uploaded/game/thumb200/hiddenspots-city200.webp', 'Hidden Spots City', 'Hidden Object');
+addNewGame('https://cdn.htmlgames.com/BalloonMaze/', 'https://www.htmlgames.com/uploaded/game/thumb200/balloonmaze200.webp', 'Balloon Maze', 'Puzzle');
+addNewGame('https://cdn.htmlgames.com/DeliciousDuos/', 'https://www.htmlgames.com/uploaded/game/thumb200/deliciousduos200.webp', 'Delicious Duos', 'Puzzle');
+addNewGame('https://cdn.htmlgames.com/ChristmasMatch3/', 'https://www.htmlgames.com/uploaded/game/thumb200/christmasmatch3200.webp', 'Christmas Match 3', 'Match 3');
+addNewGame('https://cdn.htmlgames.com/CarParkSort/', 'https://www.htmlgames.com/uploaded/game/thumb200/carparksort200.webp', 'Car Park Sort', 'Puzzle');
+addNewGame('https://cdn.htmlgames.com/Mahjong/', 'https://www.htmlgames.com/uploaded/game/thumb200/mahjong200.webp', 'Mahjong', 'Puzzle');
+addNewGame('https://cdn.htmlgames.com/Sudoku/', 'https://www.htmlgames.com/uploaded/game/thumb/dailysudoku300x200.webp', 'Sudoku', 'Puzzle');
+addNewGame('https://cdn.htmlgames.com/WordSearch/', 'https://www.htmlgames.com/uploaded/game/thumb/wordsearch300.webp', 'Word Search', 'Word');
+addNewGame('https://cdn.htmlgames.com/Hangman/', 'https://www.htmlgames.com/uploaded/game/thumb200/hangman200.webp', 'Hangman', 'Word');
+addNewGame('https://cdn.htmlgames.com/TicTacToe/', 'https://www.htmlgames.com/uploaded/game/thumb200/tictactoe200.webp', 'Tic Tac Toe', 'Board');
+addNewGame('https://cdn.htmlgames.com/ConnectFour/', 'https://www.htmlgames.com/uploaded/game/thumb/connect4300.webp', 'Connect Four', 'Board');
+addNewGame('https://cdn.htmlgames.com/Reversi/', 'https://www.htmlgames.com/uploaded/game/thumb/reversi300.webp', 'Reversi', 'Board');
+addNewGame('https://cdn.htmlgames.com/Backgammon/', 'https://www.htmlgames.com/uploaded/game/thumb200/backgammon200.webp', 'Backgammon', 'Board');
